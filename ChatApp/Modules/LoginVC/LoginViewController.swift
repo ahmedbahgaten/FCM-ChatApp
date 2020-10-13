@@ -18,7 +18,6 @@ class LoginViewController: UIViewController {
     fieldBackingView.smoothRoundCorners(to: 8)
     actionButtonBackingView.smoothRoundCorners(to: actionButtonBackingView.bounds.height / 2)
     
-    displayNameField.tintColor = .primary
     displayNameField.addTarget(
       self,
       action: #selector(textFieldDidReturn),
@@ -68,10 +67,7 @@ class LoginViewController: UIViewController {
     }
     
     displayNameField.resignFirstResponder()
-    
-    AppSettings.displayName = name
-    Auth.auth().signInAnonymously(completion: nil)
-  }
+      }
   
   private func showMissingNameAlert() {
     let ac = UIAlertController(title: "Display Name Required", message: "Please enter a display name.", preferredStyle: .alert)
