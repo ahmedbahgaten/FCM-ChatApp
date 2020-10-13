@@ -1,0 +1,11 @@
+# Useless system files on macOS
+.DS_Store
+
+# Ignore entire directories of Pods
+Pods
+
+# Any file ending with ~
+*~
+
+# Any file ending with .
+*.
