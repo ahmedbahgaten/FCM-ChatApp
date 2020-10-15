@@ -131,25 +131,43 @@ extension ChatViewController: MessagesDisplayDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         avatarView.image = messages[indexPath.row].image
     }
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+         return isFromCurrentSender(message: message) ? .white : .darkText
+     }
+     
+     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
+         switch detector {
+         case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
+         default: return MessageLabel.defaultAttributes
+         }
+     }
+     
+     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+         return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
+     }
+     
 }
 //MARK:- MessagesLayoutDelegate
 extension ChatViewController: MessagesLayoutDelegate {
     
-    func avatarSize(for message: MessageType, at indexPath: IndexPath,
-                    in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: 10, height: 10)
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 18
     }
     
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath,
-                        in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: 0, height: 8)
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 17
     }
     
-    func heightForLocation(message: MessageType, at indexPath: IndexPath,
-                           with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 0
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 20
     }
+    
+    func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 16
+    }
+    
 }
+
 // MARK: - MessageInputBarDelegate
 
 extension ChatViewController: InputBarAccessoryViewDelegate {
@@ -178,19 +196,29 @@ extension ChatViewController: MessagesDataSource {
         return messages[indexPath.row]
     }
     
-    func cellTopLabelAttributedText(for message: MessageType,
-                                    at indexPath: IndexPath) -> NSAttributedString? {
-        let name = "You"
-        return NSAttributedString(
-            string: name,
-            attributes: [
-                .font: UIFont.preferredFont(forTextStyle: .caption1),
-                .foregroundColor: UIColor(white: 0.3, alpha: 1)
-            ]
-        )
-    }
+    
     func typingIndicator(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
         return UICollectionViewCell()
+    }
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if indexPath.section % 3 == 0 {
+            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        }
+        return nil
+    }
+
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+    }
+
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let name = message.sender.displayName
+        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
+    }
+
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let dateString = DateFormatter().string(from: message.sentDate)
+        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 }
 // MARK: - UIImagePickerControllerDelegate

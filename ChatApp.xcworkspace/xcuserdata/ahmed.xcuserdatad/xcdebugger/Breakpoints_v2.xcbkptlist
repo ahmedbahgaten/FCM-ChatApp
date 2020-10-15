@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0480BA3E-15A5-4A98-9001-F8AFDBF28BB7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ChatApp/Modules/Chat/ChatViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "messageForItem(at:in:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "704E1C8A-02AD-4F95-B968-2C3B50A31825"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -30,8 +14,8 @@
             filePath = "ChatApp/Modules/Chat/ChatViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "inputBar(_:didPressSendButtonWith:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -50,38 +34,6 @@
             endingLineNumber = "95"
             landmarkName = "save(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6A3C61C8-01AF-4360-B0F0-367CB9732712 - e31822e685291288"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ChatApp.ChatViewController.(save in _74F07F93DD003B3A01EDD955844D5A19)(ChatApp.Message) -&gt; ()"
-                  moduleName = "ChatApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ahmed/Desktop/ChatApp/FCM-ChatApp/ChatApp/Modules/Chat/ChatViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "98">
-               </Location>
-               <Location
-                  uuid = "6A3C61C8-01AF-4360-B0F0-367CB9732712 - 9e89c783f2bbc500"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ChatApp.ChatViewController.(save in _74F07F93DD003B3A01EDD955844D5A19)(ChatApp.Message) -&gt; ()"
-                  moduleName = "ChatApp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ahmed/Desktop/ChatApp/FCM-ChatApp/ChatApp/Modules/Chat/ChatViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "98"
-                  endingLineNumber = "98"
-                  offsetFromSymbolStart = "126">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -98,6 +50,38 @@
             endingLineNumber = "49"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "090CB993-76B2-4D94-BB9C-916ED7634AA8 - 7ea2f34be3c3b5c9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ChatApp.ChatViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "ChatApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ahmed/Desktop/ChatApp/FCM-ChatApp/ChatApp/Modules/Chat/ChatViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "341">
+               </Location>
+               <Location
+                  uuid = "090CB993-76B2-4D94-BB9C-916ED7634AA8 - 82a9eb8882db7942"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.FIRDocumentChange) -&gt; () in closure #1 (Swift.Optional&lt;__C.FIRQuerySnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in ChatApp.ChatViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "ChatApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ahmed/Desktop/ChatApp/FCM-ChatApp/ChatApp/Modules/Chat/ChatViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50"
+                  offsetFromSymbolStart = "34">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
