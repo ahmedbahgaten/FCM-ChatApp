@@ -22,5 +22,4 @@ extension UIScrollView {
     let scrollViewBottomOffset = scrollContentSizeHeight + bottomInset - scrollViewHeight
     return scrollViewBottomOffset
   }
-  
 }

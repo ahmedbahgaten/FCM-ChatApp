@@ -1,5 +1,4 @@
 //
-//  ChannelsModel.swift
 //  ChatApp
 //
 //  Created by Ahmed on 10/13/20.

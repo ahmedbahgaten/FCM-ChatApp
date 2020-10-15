@@ -48,12 +48,6 @@ struct Message: MessageType {
   
   init?(document: QueryDocumentSnapshot) {
     let data = document.data()
-    
-    //    let sentDate = data["created"] as? Date ?? Date()
-    //    print(sentDate)
-    //    guard let sentDate = data["created"] as? Date else {
-    //      return nil
-    //    }
     guard let senderID = data["senderID"] as? String  else {
         return nil
     }
@@ -63,9 +57,8 @@ struct Message: MessageType {
     guard let sentDate = data["created"] as? Timestamp else {
         return nil
     }
+    
     id = document.documentID
-
-//    self.sentDate = sentDate
     self.sentDate = sentDate.dateValue()
     sender = Sender(senderId: senderID, displayName: senderName)
     
