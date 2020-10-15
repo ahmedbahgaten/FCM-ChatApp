@@ -40,6 +40,7 @@ final class ChatViewController: MessagesViewController {
         }
         
         reference = db.collection(["channels", id, "thread"].joined(separator: "/"))
+        
         messageListener = reference?.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
@@ -84,7 +85,7 @@ final class ChatViewController: MessagesViewController {
         }
     }
     private func handleDocumentChange(_ change: DocumentChange) {
-        let message = Message(document: change.document)!
+         let message = Message(document: change.document)!
         switch change.type {
         case .added:
             insertNewMessage(message)
@@ -93,7 +94,7 @@ final class ChatViewController: MessagesViewController {
         }
     }
     private func save(_ message: Message) {
-        reference?.addDocument(data: message.representation) { error in
+        db.collection(["channels", channel.id ?? "", "thread"].joined(separator: "/")).addDocument(data: message.representation) { error in
             if let e = error {
                 print("Error sending message: \(e.localizedDescription)")
                 return
@@ -155,7 +156,7 @@ extension ChatViewController: MessagesLayoutDelegate {
     }
     
     func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 17
+        return 5
     }
     
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
@@ -163,7 +164,7 @@ extension ChatViewController: MessagesLayoutDelegate {
     }
     
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 16
+        return 5
     }
     
 }
@@ -206,11 +207,6 @@ extension ChatViewController: MessagesDataSource {
         }
         return nil
     }
-
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-    }
-
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
         return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
