@@ -345,7 +345,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
-  - MessageKit (~> 3.3.0)
+  - MessageKit
 
 SPEC REPOS:
   trunk:
@@ -394,6 +394,6 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
 
-PODFILE CHECKSUM: 70b6cb134e883a49a26367301a25d49bb2303611
+PODFILE CHECKSUM: 7c84ba5a49bc316c0a7d226820e56c07a97c22d9
 
 COCOAPODS: 1.9.3
