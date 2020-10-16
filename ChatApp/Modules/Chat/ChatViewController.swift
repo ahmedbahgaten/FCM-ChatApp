@@ -14,17 +14,13 @@ import InputBarAccessoryView
 final class ChatViewController: MessagesViewController {
     
     private let db = Firestore.firestore()
-    private var reference: Query?
+    private var reference: CollectionReference?
     private let user: User
     private let channel: Channel
     private var messages: [Message] = []
     private var messageListener: ListenerRegistration?
     private var limit = 5
-    private(set) lazy var refreshControl: UIRefreshControl = {
-           let control = UIRefreshControl()
-           control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
-           return control
-       }()
+
     
     init(user: User, channel: Channel) {
         self.user = user
@@ -45,7 +41,7 @@ final class ChatViewController: MessagesViewController {
             return
         }
         
-        reference = db.collection(["channels", id, "thread"].joined(separator: "/")).limit(toLast: limit)
+        reference = db.collection(["channels", id, "thread"].joined(separator: "/"))
         
         messageListener = reference?.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
@@ -66,7 +62,6 @@ final class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        messagesCollectionView.refreshControl = refreshControl
     }
     
     //MARK:-Functions
@@ -108,7 +103,6 @@ final class ChatViewController: MessagesViewController {
         self.messages.insert(message, at: 0)
         messages.sort()
         self.messagesCollectionView.reloadDataAndKeepOffset()
-        self.refreshControl.endRefreshing()
     }
     private func save(_ message: Message) {
         db.collection(["channels", channel.id ?? "", "thread"].joined(separator: "/")).addDocument(data: message.representation) { error in
@@ -121,21 +115,6 @@ final class ChatViewController: MessagesViewController {
         }
     }
     
-    @objc func loadMoreMessages() {
-        limit += 5
-        reference = db.collection(["channels", channel.id ?? "", "thread"].joined(separator: "/")).limit(toLast: limit)
-        
-        messageListener = reference?.addSnapshotListener { querySnapshot, error in
-            guard let snapshot = querySnapshot else {
-                print("Error listening for channel updates: \(error?.localizedDescription ?? "No error")")
-                return
-            }
-            
-            snapshot.documentChanges.forEach { [weak self] change in
-                self?.addNewMessages(change)
-            }
-        }
-    }
     deinit {
         messageListener?.remove()
     }
