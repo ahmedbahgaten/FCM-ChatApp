@@ -15,7 +15,9 @@ struct Message: MessageType {
   let content: String
   let sentDate: Date
   let sender: SenderType
-  
+  var image: UIImage? = nil
+  var downloadURL: URL? = nil
+    
   var kind: MessageKind {
     if let image = image {
         return .photo(image as! MediaItem)
@@ -28,8 +30,7 @@ struct Message: MessageType {
     return id ?? UUID().uuidString
   }
   
-  var image: UIImage? = nil
-  var downloadURL: URL? = nil
+
   
   init(user: User, content: String) {
     sender = Sender(senderId: user.uid, displayName: AppSettings.displayName)
@@ -46,7 +47,7 @@ struct Message: MessageType {
     id = nil
   }
   
-  init?(document: QueryDocumentSnapshot) {
+    init?(document: QueryDocumentSnapshot) {
     let data = document.data()
     guard let senderID = data["senderID"] as? String  else {
         return nil
@@ -61,7 +62,6 @@ struct Message: MessageType {
     id = document.documentID
     self.sentDate = sentDate.dateValue()
     sender = Sender(senderId: senderID, displayName: senderName)
-    
     if let content = data["content"] as? String {
       self.content = content
       downloadURL = nil

@@ -74,12 +74,8 @@ final class ChatViewController: MessagesViewController {
         guard !messages.contains(message) else {
             return
         }
-        
         messages.append(message)
-        print(messages)
         messages.sort()
-        print(messages)
-        
         let isLatestMessage = messages.firstIndex(of: message) == (messages.count - 1)
         let shouldScrollToBottom = messagesCollectionView.isAtBottom && isLatestMessage
         
@@ -103,6 +99,7 @@ final class ChatViewController: MessagesViewController {
     private func addNewMessages(_ change:DocumentChange) {
         let message = Message(document: change.document)!
         guard !messages.contains(message) else {
+            self.refreshControl.endRefreshing()
             return
         }
         self.messages.insert(message, at: 0)
@@ -147,7 +144,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .red : .incomingMessage
+        return isFromCurrentSender(message: message) ? .primary : .incomingMessage
     }
     
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath,
@@ -157,9 +154,8 @@ extension ChatViewController: MessagesDisplayDelegate {
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath,
                       in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        
+
         return .bubbleTail(corner, .curved)
     }
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
@@ -168,18 +164,6 @@ extension ChatViewController: MessagesDisplayDelegate {
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
          return isFromCurrentSender(message: message) ? .white : .darkText
      }
-     
-     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
-         switch detector {
-         case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
-         default: return MessageLabel.defaultAttributes
-         }
-     }
-     
-     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
-         return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
-     }
-     
 }
 //MARK:- MessagesLayoutDelegate
 extension ChatViewController: MessagesLayoutDelegate {

@@ -153,7 +153,6 @@ class ChannelsViewController: UITableViewController {
         print("Error saving channel: \(e.localizedDescription)")
       }
     }
-    print(channel.id)
   }
   
   private func addChannelToTable(_ channel: Channel) {
@@ -168,7 +167,6 @@ class ChannelsViewController: UITableViewController {
       return
     }
     tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
-    print(channel.id)
   }
   
   private func updateChannelInTable(_ channel: Channel) {
