@@ -12,7 +12,7 @@ import FirebaseFirestore
 import InputBarAccessoryView
 
 final class ChatViewController: MessagesViewController {
-    
+    //MARK:-Variables
     private let db = Firestore.firestore()
     private var reference: Query?
     private let user: User
@@ -25,21 +25,38 @@ final class ChatViewController: MessagesViewController {
            control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
            return control
        }()
-    
+    //MARK:-Init
     init(user: User, channel: Channel) {
         self.user = user
         self.channel = channel
         super.init(nibName: nil, bundle: nil)
-        
-        title = channel.name
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //MARK:-ViewLifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        getMessages()
+    }
+    
+    //MARK:-Functions
+    private func setupUI() {
+        title = channel.name
+        navigationItem.largeTitleDisplayMode = .never
+        
+        maintainPositionOnKeyboardFrameChanged = true
+        messageInputBar.inputTextView.tintColor = .primary
+        messageInputBar.sendButton.setTitleColor(.primary, for: .normal)
+        messageInputBar.delegate = self
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        messagesCollectionView.refreshControl = refreshControl
+    }
+    private func getMessages() {
         guard let id = channel.id else {
             navigationController?.popViewController(animated: true)
             return
@@ -57,19 +74,7 @@ final class ChatViewController: MessagesViewController {
                 self.handleDocumentChange(change)
             }
         }
-        navigationItem.largeTitleDisplayMode = .never
-        
-        maintainPositionOnKeyboardFrameChanged = true
-        messageInputBar.inputTextView.tintColor = .primary
-        messageInputBar.sendButton.setTitleColor(.primary, for: .normal)
-        messageInputBar.delegate = self
-        messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-        messagesCollectionView.refreshControl = refreshControl
     }
-    
-    //MARK:-Functions
     private func insertNewMessage(_ message: Message) {
         guard !messages.contains(message) else {
             return
